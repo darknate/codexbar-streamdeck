@@ -1,0 +1,44 @@
+{
+  "name": "codexbar-streamdeck",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Stream Deck plugin for displaying remaining CodexBar quota from the local widget snapshot",
+  "author": "darknate",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/darknate/codexbar-streamdeck.git"
+  },
+  "bugs": {
+    "url": "https://github.com/darknate/codexbar-streamdeck/issues"
+  },
+  "homepage": "https://github.com/darknate/codexbar-streamdeck",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "validate": "npm_config_cache=.npm-cache npx --yes @elgato/cli@latest validate io.codexbar.usage.sdPlugin",
+    "pack": "mkdir -p dist && npm_config_cache=.npm-cache npx --yes @elgato/cli@latest pack io.codexbar.usage.sdPlugin --force -o dist",
+    "link": "npm_config_cache=.npm-cache npx --yes @elgato/cli@latest link io.codexbar.usage.sdPlugin",
+    "restart": "npm_config_cache=.npm-cache npx --yes @elgato/cli@latest restart io.codexbar.usage"
+  },
+  "dependencies": {
+    "@elgato/streamdeck": "^2.0.4"
+  },
+  "overrides": {
+    "picomatch": "^4.0.4"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-terser": "^1.0.0",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@tsconfig/node20": "^20.1.4",
+    "@types/node": "^22.13.0",
+    "rollup": "^4.32.1",
+    "tslib": "^2.8.1",
+    "typescript": "^5.7.3",
+    "vitest": "^3.1.1"
+  }
+}

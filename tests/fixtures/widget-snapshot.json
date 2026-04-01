@@ -1,0 +1,81 @@
+{
+  "generatedAt": "2026-03-21T09:25:39Z",
+  "enabledProviders": [
+    "codex",
+    "claude",
+    "cursor",
+    "antigravity",
+    "warp"
+  ],
+  "entries": [
+    {
+      "provider": "codex",
+      "updatedAt": "2026-03-21T09:24:30Z",
+      "codeReviewRemainingPercent": 99,
+      "secondary": {
+        "usedPercent": 26,
+        "resetDescription": "25. Mar 2026 at 17:55",
+        "windowMinutes": 10080,
+        "resetsAt": "2026-03-25T16:55:11Z"
+      },
+      "tokenUsage": {
+        "sessionCostUSD": 1.6200085,
+        "sessionTokens": 3169819,
+        "last30DaysCostUSD": 1865.0581492000001,
+        "last30DaysTokens": 3655007105
+      },
+      "primary": {
+        "usedPercent": 8,
+        "resetDescription": "12:13",
+        "windowMinutes": 300,
+        "resetsAt": "2026-03-21T11:13:24Z"
+      },
+      "dailyUsage": [
+        {
+          "costUSD": 1.6200085,
+          "dayKey": "2026-03-21",
+          "totalTokens": 3169819
+        }
+      ],
+      "creditsRemaining": 0
+    },
+    {
+      "provider": "claude",
+      "primary": {
+        "usedPercent": 0,
+        "windowMinutes": 300
+      },
+      "secondary": {
+        "usedPercent": 0,
+        "windowMinutes": 10080
+      },
+      "tokenUsage": {
+        "sessionTokens": 132937,
+        "last30DaysTokens": 1418356
+      },
+      "updatedAt": "2026-03-21T09:25:32Z",
+      "dailyUsage": [
+        {
+          "dayKey": "2026-03-02",
+          "totalTokens": 132937
+        }
+      ]
+    },
+    {
+      "provider": "cursor",
+      "primary": {
+        "usedPercent": 47,
+        "resetDescription": "Resets Mar 23 at 1:44PM",
+        "resetsAt": "2026-03-23T12:44:33Z"
+      },
+      "secondary": {
+        "usedPercent": 0,
+        "resetDescription": "Resets Mar 23 at 1:44PM",
+        "resetsAt": "2026-03-23T12:44:33Z"
+      },
+      "updatedAt": "2026-03-21T09:24:30Z",
+      "dailyUsage": []
+    }
+  ]
+}
+

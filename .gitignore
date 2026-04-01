@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+coverage/
+.npm-cache/
+dist/
+logs/
+io.codexbar.usage.sdPlugin/bin/
+io.codexbar.usage.sdPlugin/logs/

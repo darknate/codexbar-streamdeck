@@ -1,0 +1,43 @@
+{
+  "Name": "CodexBar Usage",
+  "Version": "0.1.0.0",
+  "Author": "darknate",
+  "Actions": [
+    {
+      "Name": "Usage Button",
+      "UUID": "io.codexbar.usage.usage-button",
+      "Icon": "imgs/actions/usage-button/icon",
+      "Tooltip": "Display usage state from CodexBar widget snapshot",
+      "PropertyInspectorPath": "ui/usage-button.html",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/actions/usage-button/key",
+          "TitleAlignment": "middle"
+        }
+      ]
+    }
+  ],
+  "Category": "CodexBar Usage",
+  "CategoryIcon": "imgs/plugin/category-icon",
+  "CodePath": "bin/plugin.js",
+  "Description": "Show CodexBar usage data for Codex, Claude, and Cursor from the local widget snapshot.",
+  "Icon": "imgs/plugin/marketplace",
+  "SDKVersion": 2,
+  "Software": {
+    "MinimumVersion": "6.5"
+  },
+  "OS": [
+    {
+      "Platform": "mac",
+      "MinimumVersion": "14.0"
+    }
+  ],
+  "Nodejs": {
+    "Version": "20",
+    "Debug": "enabled"
+  },
+  "UUID": "io.codexbar.usage"
+}
