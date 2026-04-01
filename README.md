@@ -1,26 +1,26 @@
 # CodexBar Stream Deck
 
-Show your remaining CodexBar quota directly on an Elgato Stream Deck key. 🎛️
+Show your remaining [CodexBar](https://github.com/steipete/CodexBar) quota directly on an Elgato Stream Deck key. 🎛️
 
-This plugin reads CodexBar's local `widget-snapshot.json` on macOS and renders a compact 3-line status button for:
+This plugin reads [CodexBar](https://github.com/steipete/CodexBar)'s local `widget-snapshot.json` on macOS and renders a compact 3-line status button for:
 
 - `codex`
 - `claude`
 - `cursor`
 
-It displays **remaining quota**, not used quota. If CodexBar reports `1%` used in a 5-hour window, the key shows `99%`.
+It displays **remaining quota**, not used quota. If [CodexBar](https://github.com/steipete/CodexBar) reports `1%` used in a 5-hour window, the key shows `99%`.
 
 ## ✨ Why This Exists
 
-CodexBar already writes a local usage snapshot. This plugin turns that file into a Stream Deck button, so you can see your remaining budget without opening another app or browser tab.
+[CodexBar](https://github.com/steipete/CodexBar) already writes a local usage snapshot. This plugin turns that file into a Stream Deck button, so you can see your remaining budget without opening another app or browser tab.
 
-No CodexBar fork is required. No API keys are required. No network calls are made. 🔒
+No [CodexBar](https://github.com/steipete/CodexBar) fork is required. No API keys are required. No network calls are made. 🔒
 
 ## 🧰 What You Need
 
 - macOS
 - Stream Deck desktop app
-- CodexBar running locally
+- [CodexBar](https://github.com/steipete/CodexBar) running locally
 - Node.js 20 and npm for local build/development
 
 Default snapshot path:
@@ -58,7 +58,7 @@ This creates:
 
 ## ✅ Features
 
-- File-based integration with CodexBar 📂
+- File-based integration with [CodexBar](https://github.com/steipete/CodexBar) 📂
 - Per-provider rendering tuned for `codex`, `claude`, and `cursor` 🎯
 - Shared snapshot cache across multiple keys ⚡
 - Safe handling for missing files, malformed JSON, stale snapshots, and partial schema drift 🛟
@@ -70,7 +70,7 @@ If you want a coding agent to set this project up on your Mac, copy the prompt f
 
 Short version:
 
-> In this repo on macOS, install dependencies, run typecheck/tests/build/validate, package the Stream Deck plugin, link it into Stream Deck, and tell me exactly what to click in the Stream Deck app to verify the `codex`, `claude`, and `cursor` buttons against the local CodexBar snapshot.
+> In this repo on macOS, install dependencies, run typecheck/tests/build/validate, package the Stream Deck plugin, link it into Stream Deck, and tell me exactly what to click in the Stream Deck app to verify the `codex`, `claude`, and `cursor` buttons against the local [CodexBar](https://github.com/steipete/CodexBar) snapshot.
 
 ## 📚 Documentation
 
@@ -85,7 +85,7 @@ Short version:
 
 - No credentials are required.
 - No API keys are stored.
-- The plugin only reads a local JSON file that CodexBar already generates.
+- The plugin only reads a local JSON file that [CodexBar](https://github.com/steipete/CodexBar) already generates.
 - There is no network traffic in the current implementation.
 
 ## 📄 License
