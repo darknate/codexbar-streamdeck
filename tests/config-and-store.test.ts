@@ -1,9 +1,9 @@
 import { mkdtempSync, rmSync, unlinkSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { homedir, tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { withDefaults } from "../src/constants";
+import { persistedSettings, withDefaults } from "../src/constants";
 import { SnapshotStore } from "../src/store";
 
 const tempDirs: string[] = [];
@@ -42,6 +42,49 @@ describe("settings normalization", () => {
 
     expect(defaults.snapshotPath.startsWith("/")).toBe(true);
     expect(defaults.snapshotPath).toContain("/Library/test/widget-snapshot.json");
+  });
+
+  it("prefers the freshest known CodexBar snapshot path when none is configured", () => {
+    const defaults = withDefaults({
+      provider: "codex",
+      refreshIntervalSec: 10,
+      staleThresholdSec: 600,
+    });
+
+    expect(defaults.snapshotPath).toContain("/Library/");
+    expect(defaults.snapshotPath).toContain("widget-snapshot.json");
+  });
+
+  it("preserves an explicit known CodexBar snapshot path override", () => {
+    const defaults = withDefaults({
+      provider: "codex",
+      snapshotPath: "~/Library/Group Containers/group.com.steipete.codexbar/widget-snapshot.json",
+      refreshIntervalSec: 10,
+      staleThresholdSec: 600,
+    });
+
+    expect(defaults.snapshotPath).toBe(`${homedir()}/Library/Group Containers/group.com.steipete.codexbar/widget-snapshot.json`);
+  });
+
+  it("does not persist an auto-detected snapshot path when none was configured", () => {
+    const settings = persistedSettings({
+      provider: "codex",
+      refreshIntervalSec: 10,
+      staleThresholdSec: 600,
+    });
+
+    expect(settings.snapshotPath).toBeUndefined();
+  });
+
+  it("persists an explicit snapshot path override after normalization", () => {
+    const settings = persistedSettings({
+      provider: "codex",
+      snapshotPath: "~/Library/Group Containers/group.com.steipete.codexbar/widget-snapshot.json",
+      refreshIntervalSec: 10,
+      staleThresholdSec: 600,
+    });
+
+    expect(settings.snapshotPath).toBe(`${homedir()}/Library/Group Containers/group.com.steipete.codexbar/widget-snapshot.json`);
   });
 });
 

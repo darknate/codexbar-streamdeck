@@ -22,11 +22,19 @@ export interface DailyUsageItem {
   totalTokens?: number;
 }
 
+export interface UsageRowItem {
+  id?: string;
+  title?: string;
+  percentLeft?: number;
+}
+
 export interface SnapshotEntry {
   provider?: string;
   updatedAt?: string;
   primary?: UsageWindow;
   secondary?: UsageWindow;
+  tertiary?: UsageWindow;
+  usageRows?: UsageRowItem[];
   tokenUsage?: TokenUsage;
   dailyUsage?: DailyUsageItem[];
   codeReviewRemainingPercent?: number;
@@ -63,8 +71,11 @@ export interface ButtonState {
   freshnessSeconds?: number;
   primaryPercent?: number;
   secondaryPercent?: number;
+  tertiaryPercent?: number;
   primaryResetText?: string;
   secondaryResetText?: string;
+  tertiaryResetText?: string;
+  usageRows?: UsageRowItem[];
   sessionTokens?: number;
   sessionCostUSD?: number;
   last30DaysTokens?: number;

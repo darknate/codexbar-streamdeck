@@ -25,7 +25,11 @@ No [CodexBar](https://github.com/steipete/CodexBar) fork is required. No API key
 
 Default snapshot path:
 
-`~/Library/Group Containers/group.com.steipete.codexbar/widget-snapshot.json`
+The plugin auto-detects the freshest known CodexBar snapshot path and currently prefers:
+
+- `~/Library/Group Containers/Y5PE65HELJ.com.steipete.codexbar/widget-snapshot.json`
+- `~/Library/Group Containers/group.com.steipete.codexbar/widget-snapshot.json`
+- `~/Library/Application Support/CodexBar/widget-snapshot.json`
 
 You can override the path per button in the Stream Deck property inspector.
 
