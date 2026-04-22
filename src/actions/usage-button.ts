@@ -8,7 +8,7 @@ import streamdeck, {
   WillDisappearEvent,
 } from "@elgato/streamdeck";
 
-import { withDefaults } from "../constants";
+import { persistedSettings, withDefaults } from "../constants";
 import { buildState } from "../snapshot";
 import { renderTitle } from "../render";
 import { SnapshotStore } from "../store";
@@ -172,7 +172,7 @@ export class UsageButtonAction extends SingletonAction<UsageButtonSettings> {
 
     const settings = withDefaults(ev.payload.settings);
     const poller = this.subscribe(ev.action, settings);
-    await ev.action.setSettings(settings);
+    await ev.action.setSettings(persistedSettings(ev.payload.settings));
     await poller.render(ev.action.id, true);
   }
 
@@ -185,7 +185,7 @@ export class UsageButtonAction extends SingletonAction<UsageButtonSettings> {
 
     const settings = withDefaults(ev.payload.settings);
     const poller = this.subscribe(ev.action, settings);
-    await ev.action.setSettings(settings);
+    await ev.action.setSettings(persistedSettings(ev.payload.settings));
     await poller.render(ev.action.id, true);
   }
 

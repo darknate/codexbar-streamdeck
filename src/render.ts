@@ -1,4 +1,4 @@
-import type { ButtonState, SupportedProvider } from "./types";
+import type { ButtonState, SupportedProvider, UsageRowItem } from "./types";
 
 export function renderTitle(state: ButtonState): string {
   if (state.status === "snapshot_missing") {
@@ -21,6 +21,10 @@ export function renderTitle(state: ButtonState): string {
     return renderQuotaOnly(state);
   }
 
+  if (state.usageRows && state.usageRows.length > 0) {
+    return renderUsageRows(state);
+  }
+
   if (state.providerId === "codex") {
     return renderCodex(state);
   }
@@ -30,6 +34,15 @@ export function renderTitle(state: ButtonState): string {
   }
 
   return renderCursor(state);
+}
+
+function renderUsageRows(state: ButtonState): string {
+  const lines = [providerLabel(state.providerId)];
+  for (const row of state.usageRows!.slice(0, 2)) {
+    lines.push(`${compactRowTitle(state.providerId, row)} ${remainingText(row.percentLeft)}`);
+  }
+
+  return withStatusSuffix(lines, state.status).join("\n");
 }
 
 function renderCodex(state: ButtonState): string {
@@ -111,7 +124,7 @@ function withStatusSuffix(lines: string[], status: ButtonState["status"]): strin
   if (status === "snapshot_stale") {
     const updatedLines = [...lines];
     const lastIndex = updatedLines.length - 1;
-    updatedLines[lastIndex] = `${updatedLines[lastIndex]} Stale`;
+    updatedLines[lastIndex] = `${updatedLines[lastIndex]} STALE`;
     return updatedLines;
   }
 
@@ -125,6 +138,15 @@ function percentText(value: number | undefined): string {
 
   const remaining = Math.max(0, Math.min(100, 100 - Math.round(value)));
   return `${remaining}%`;
+}
+
+function remainingText(value: number | undefined): string {
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    return "--";
+  }
+
+  const rounded = Math.max(0, Math.min(100, Math.round(value)));
+  return `${rounded}%`;
 }
 
 function shortTokenText(value: number): string {
@@ -147,4 +169,28 @@ function providerLabel(provider: SupportedProvider): string {
   if (provider === "codex") return "Codex";
   if (provider === "claude") return "Claude";
   return "Cursor";
+}
+
+function compactRowTitle(provider: SupportedProvider, row: UsageRowItem): string {
+  const title = row.title?.trim().toLowerCase() ?? "";
+  const id = row.id?.trim().toLowerCase() ?? "";
+
+  if (provider === "codex") {
+    if (id === "session" || title === "session") return "5h";
+    if (id === "weekly" || title === "weekly") return "Wk";
+  }
+
+  if (provider === "claude") {
+    if (id === "primary" || title === "session") return "Now";
+    if (id === "secondary" || title === "weekly") return "Wk";
+    if (id === "tertiary" || title.includes("opus")) return "Opus";
+  }
+
+  if (provider === "cursor") {
+    if (id === "primary" || title === "total") return "Tot";
+    if (id === "secondary" || title === "auto") return "Auto";
+    if (id === "tertiary" || title === "api") return "API";
+  }
+
+  return shortResetText(row.title ?? "Row");
 }

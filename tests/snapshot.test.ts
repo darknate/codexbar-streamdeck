@@ -96,12 +96,71 @@ describe("snapshot parsing", () => {
     const state = buildState(staleSnapshot, "codex", new Date("2026-03-21T09:30:00Z"), 600);
 
     expect(state.status).toBe("snapshot_stale");
-    expect(renderTitle(state)).toContain("Stale");
+    expect(renderTitle(state)).toContain("STALE");
   });
 
   it("throws on malformed root shape", () => {
     expect(() => parseSnapshot("{\"generatedAt\":\"2026-03-21T09:25:39Z\"}")).toThrow(
       "Snapshot root must contain an entries array",
     );
+  });
+
+  it("renders the current CodexBar usageRows schema", () => {
+    const snapshot = parseSnapshot(
+      JSON.stringify({
+        generatedAt: "2026-04-22T10:22:01Z",
+        enabledProviders: ["codex", "claude", "cursor"],
+        entries: [
+          {
+            provider: "codex",
+            updatedAt: "2026-04-22T10:22:00Z",
+            primary: {
+              usedPercent: 0,
+              windowMinutes: 300,
+              resetDescription: "16:25",
+            },
+            secondary: {
+              usedPercent: 1,
+              windowMinutes: 10080,
+              resetDescription: "28. Apr 2026 at 20:24",
+            },
+            usageRows: [
+              { id: "session", title: "Session", percentLeft: 100 },
+              { id: "weekly", title: "Weekly", percentLeft: 99 },
+            ],
+          },
+          {
+            provider: "cursor",
+            updatedAt: "2026-04-22T10:22:00Z",
+            primary: {
+              usedPercent: 0.5025641025641026,
+              resetDescription: "Resets Apr 23 at 2:44PM",
+            },
+            secondary: {
+              usedPercent: 0.6533333333333333,
+              resetDescription: "Resets Apr 23 at 2:44PM",
+            },
+            tertiary: {
+              usedPercent: 0,
+              resetDescription: "Resets Apr 23 at 2:44PM",
+            },
+            usageRows: [
+              { id: "primary", title: "Total", percentLeft: 99.49743589743589 },
+              { id: "secondary", title: "Auto", percentLeft: 99.34666666666666 },
+              { id: "tertiary", title: "API", percentLeft: 100 },
+            ],
+          },
+        ],
+      }),
+    );
+
+    const codexState = buildState(snapshot, "codex", new Date("2026-04-22T10:23:00Z"), 600);
+    const cursorState = buildState(snapshot, "cursor", new Date("2026-04-22T10:23:00Z"), 600);
+
+    expect(renderTitle(codexState)).toContain("5h 100%");
+    expect(renderTitle(codexState)).toContain("Wk 99%");
+    expect(cursorState.tertiaryPercent).toBe(0);
+    expect(renderTitle(cursorState)).toContain("Tot 99%");
+    expect(renderTitle(cursorState)).toContain("Auto 99%");
   });
 });

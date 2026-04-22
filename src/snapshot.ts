@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 
-import type { ButtonState, SnapshotEntry, SupportedProvider, WidgetSnapshot } from "./types";
+import type { ButtonState, SnapshotEntry, SupportedProvider, UsageRowItem, WidgetSnapshot } from "./types";
 
 export function parseSnapshot(raw: string): WidgetSnapshot {
   const parsed = JSON.parse(raw) as WidgetSnapshot;
@@ -43,6 +43,8 @@ export function buildState(
   const hasUsableFields = Boolean(
     entry.primary ||
       entry.secondary ||
+      entry.tertiary ||
+      (entry.usageRows && entry.usageRows.length > 0) ||
       entry.tokenUsage ||
       entry.codeReviewRemainingPercent !== undefined ||
       entry.creditsRemaining !== undefined,
@@ -76,8 +78,11 @@ function mergeEntry(
     freshnessSeconds,
     primaryPercent: entry.primary?.usedPercent,
     secondaryPercent: entry.secondary?.usedPercent,
+    tertiaryPercent: entry.tertiary?.usedPercent,
     primaryResetText: entry.primary?.resetDescription,
     secondaryResetText: entry.secondary?.resetDescription,
+    tertiaryResetText: entry.tertiary?.resetDescription,
+    usageRows: normalizeUsageRows(entry.usageRows),
     sessionTokens: entry.tokenUsage?.sessionTokens,
     sessionCostUSD: entry.tokenUsage?.sessionCostUSD,
     last30DaysTokens: entry.tokenUsage?.last30DaysTokens,
@@ -85,4 +90,17 @@ function mergeEntry(
     codeReviewRemainingPercent: entry.codeReviewRemainingPercent,
     creditsRemaining: entry.creditsRemaining,
   };
+}
+
+function normalizeUsageRows(rows: UsageRowItem[] | undefined): UsageRowItem[] | undefined {
+  const normalized = rows?.filter(
+    (row) =>
+      row &&
+      typeof row.title === "string" &&
+      row.title.length > 0 &&
+      typeof row.percentLeft === "number" &&
+      Number.isFinite(row.percentLeft),
+  );
+
+  return normalized && normalized.length > 0 ? normalized : undefined;
 }
